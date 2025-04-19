@@ -21,11 +21,11 @@ module.exports = {
   },
   ignorePatterns: ["!**/.server", "!**/.client"],
 
-  // Base config
+  
   extends: ["eslint:recommended"],
 
   overrides: [
-    // React
+    
     {
       files: ["**/*.{js,jsx,ts,tsx}"],
       plugins: ["react", "jsx-a11y"],
@@ -50,7 +50,7 @@ module.exports = {
       },
     },
 
-    // Node
+    
     {
       files: [".eslintrc.cjs"],
       env: {
