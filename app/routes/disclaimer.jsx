@@ -19,25 +19,31 @@ export const loader = () => {
 export const meta = () => {
   return [
     { title: "NXT4 - Disclaimer" },
-    { name: "description", content: "Disclaimer For NXT4" },
+    {
+      name: "description",
+      content:
+        "Legal disclaimer and copyright information for the NXT4 website.",
+    },
   ];
 };
 
 export default function Disclaimer() {
-  const data = useLoaderData();
+  const { disclaimer } = useLoaderData();
+  const year = new Date().getFullYear();
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-white">
       <Navbar />
 
       <main className="flex-grow">
-        <section className="px-4 py-8 max-w-4xl mx-auto">
-          <div className="bg-gray-50 rounded-lg shadow p-6">
-            <h2 className="text-2xl text-[#0E46A3] mb-6 text-center">
-              {data.disclaimer.title}
+        <section className="px-4 py-10 max-w-4xl mx-auto">
+          <div className="bg-gray-50 rounded-lg shadow p-6 md:p-8">
+            <h2 className="text-2xl md:text-3xl text-[#0E46A3] mb-6 text-center font-semibold">
+              {disclaimer.title}
             </h2>
-            {data.disclaimer.paragraphs.map((paragraph, index) => (
-              <p key={index} className="mb-4 text-gray-700">
+
+            {disclaimer.paragraphs.map((paragraph, index) => (
+              <p key={index} className="mb-4 text-gray-700 leading-relaxed">
                 {paragraph}
               </p>
             ))}
@@ -48,9 +54,9 @@ export default function Disclaimer() {
       <footer className="bg-gray-50 p-4 mt-auto border-t border-gray-200 text-center">
         <div className="max-w-4xl mx-auto">
           <p className="mb-1 text-gray-600">
-            © 2025 NXT4. All rights reserved.
+            © {year} NXT4. All rights reserved.
           </p>
-          <p className="mb-3 text-gray-600">Proudly crafted in India ❤️</p>
+          <p className="mb-2 text-gray-600">Proudly crafted in India ❤️</p>
         </div>
       </footer>
     </div>

@@ -6,14 +6,15 @@ import {
   useSearchParams,
 } from "@remix-run/react";
 import Navbar from "../components/navbar";
-import { insertDocument, findDocuments } from "../utils/db.server";
+import { insertDocument } from "../utils/db.server";
 import { useEffect, useRef } from "react";
+
 export const meta = () => {
   return [
     { title: "NXT4 - Feedback" },
     {
       name: "description",
-      content: "Feedback Form For NXT4",
+      content: "Leave your valuable feedback for NXT4's services and products.",
     },
   ];
 };
@@ -31,30 +32,33 @@ export const action = async ({ request }) => {
   const message = formData.get("message");
 
   const errors = {};
-  if (!name) errors.name = "Name is required";
-  if (!email) errors.email = "Email is required";
-  if (!message) errors.message = "Message is required";
+  if (!name || name.trim() === "") errors.name = "Name is required.";
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    errors.email = "Valid email is required.";
+  }
+  if (!message || message.trim().length < 10) {
+    errors.message = "Message must be at least 10 characters.";
+  }
+
   if (Object.keys(errors).length > 0) {
-    return json({ errors }, { status: 400 });
+    return json({ errors, values: { name, email, message } }, { status: 400 });
   }
 
   try {
     const feedback = {
-      name,
-      email,
-      message,
+      name: name.trim(),
+      email: email.trim(),
+      message: message.trim(),
       createdAt: new Date(),
     };
 
-    const result = await insertDocument("feedback", feedback);
-    const docs = await findDocuments("feedback");
-
+    await insertDocument("feedback", feedback);
     return redirect("/feedback?success=true");
   } catch (error) {
     return json(
       {
         errors: {
-          _form: `Error: ${error.message}`,
+          _form: `Something went wrong. Please try again later.`,
         },
       },
       { status: 500 }
@@ -68,41 +72,38 @@ export default function Feedback() {
   const [searchParams] = useSearchParams();
   const success = searchParams.get("success") === "true";
   const formRef = useRef(null);
+  const date = new Date();
+  const year = date.getFullYear();
+
   useEffect(() => {
     if (success && formRef.current) {
       formRef.current.reset();
-
-      const inputs = formRef.current.querySelectorAll("input, textarea");
-      inputs.forEach((input) => {
-        input.value = "";
-      });
     }
   }, [success]);
+
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-white">
       <Navbar />
 
       <main className="flex-grow">
-        <section className="px-4 py-8 max-w-4xl mx-auto">
-          <div className="max-w-3xl mx-auto bg-gray-50 p-8 rounded-lg shadow-lg">
-            <h2 className="text-2xl text-[#0E46A3] mb-4 text-center">
+        <section className="px-4 py-10 max-w-4xl mx-auto">
+          <div className="bg-gray-50 p-8 rounded-lg shadow-lg max-w-2xl mx-auto">
+            <h2 className="text-2xl md:text-3xl text-[#0E46A3] mb-4 text-center">
               We're All Ears
             </h2>
-            <p className="text-gray-600 mb-8 text-center">{data.para}</p>
+            <p className="text-gray-600 mb-6 text-center">{data.para}</p>
 
-            {success ? (
-              <div className="bg-green-50 border border-green-400 text-green-700 p-4 rounded mb-6">
-                <p className="text-center">
-                  Thank you for your feedback! We appreciate your input.
-                </p>
+            {success && (
+              <div className="bg-green-100 border border-green-400 text-green-700 p-4 rounded mb-6 text-center">
+                Thank you for your feedback! We appreciate your input.
               </div>
-            ) : null}
+            )}
 
-            {actionData?.errors?._form ? (
-              <div className="bg-red-50 border border-red-400 text-red-700 p-4 rounded mb-6">
-                <p className="text-center">{actionData.errors._form}</p>
+            {actionData?.errors?._form && (
+              <div className="bg-red-100 border border-red-400 text-red-700 p-4 rounded mb-6 text-center">
+                {actionData.errors._form}
               </div>
-            ) : null}
+            )}
 
             <Form method="post" className="space-y-6" ref={formRef}>
               <div>
@@ -117,6 +118,7 @@ export default function Feedback() {
                   name="name"
                   id="name"
                   required
+                  defaultValue={actionData?.values?.name || ""}
                   className={`mt-1 block w-full rounded-md border ${
                     actionData?.errors?.name
                       ? "border-red-500"
@@ -143,6 +145,7 @@ export default function Feedback() {
                   name="email"
                   id="email"
                   required
+                  defaultValue={actionData?.values?.email || ""}
                   className={`mt-1 block w-full rounded-md border ${
                     actionData?.errors?.email
                       ? "border-red-500"
@@ -169,6 +172,7 @@ export default function Feedback() {
                   id="message"
                   rows={5}
                   required
+                  defaultValue={actionData?.values?.message || ""}
                   className={`mt-1 block w-full rounded-md border ${
                     actionData?.errors?.message
                       ? "border-red-500"
@@ -183,10 +187,10 @@ export default function Feedback() {
                 )}
               </div>
 
-              <div className="flex justify-end">
+              <div className="text-right">
                 <button
                   type="submit"
-                  className="inline-flex items-center px-6 py-2 border border-transparent text-sm font-semibold rounded-lg shadow-sm text-white bg-[#0E46A3] hover:bg-[#03346E] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0E46A3] transition-colors duration-200"
+                  className="inline-flex items-center px-6 py-2 border border-transparent text-sm font-semibold rounded-lg shadow-sm text-white bg-[#0E46A3] hover:bg-[#03346E] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0E46A3] transition-colors"
                 >
                   Submit
                 </button>
@@ -199,9 +203,9 @@ export default function Feedback() {
       <footer className="bg-gray-50 p-4 mt-auto border-t border-gray-200 text-center">
         <div className="max-w-4xl mx-auto">
           <p className="mb-1 text-gray-600">
-            © 2025 NXT4. All rights reserved.
+            © {year} NXT4. All rights reserved.
           </p>
-          <p className="mb-3 text-gray-600">Proudly crafted in India ❤️</p>
+          <p className="mb-2 text-gray-600">Proudly crafted in India ❤️</p>
         </div>
       </footer>
     </div>

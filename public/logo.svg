@@ -1,0 +1,13 @@
+<svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+  <rect x="50" y="50" width="300" height="100" rx="10" fill="#03346E" />
+  
+  <text x="80" y="120" font-family="Arial, sans-serif" font-weight="bold" font-size="60" fill="white">NXT</text>
+  
+  <text x="240" y="120" font-family="Arial, sans-serif" font-weight="bold" font-size="60" fill="#F5004F">4</text>
+  
+  <path d="M290 80 L320 50 L350 80 L320 110 Z" fill="#F5004F" opacity="0.9" />
+  
+  <line x1="70" y1="140" x2="330" y2="140" stroke="white" stroke-width="2" stroke-dasharray="1,3" />
+  
+  <text x="200" y="165" font-family="Arial, sans-serif" font-size="12" fill="#03346E" text-anchor="middle" font-style="italic">Quality Hardware & Lighting. Delivered.</text>
+</svg>
