@@ -4,6 +4,8 @@ import { defineConfig } from "vite";
 export default defineConfig({
   plugins: [
     remix({
+      serverModuleFormat: "esm",
+      serverPlatform: "neutral",
       future: {
         v3_fetcherPersist: true,
         v3_relativeSplatPath: true,
