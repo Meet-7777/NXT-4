@@ -1,7 +1,6 @@
 import { Link, useLoaderData } from "@remix-run/react";
 import { useEffect, useRef, useState } from "react";
 import { json } from "@remix-run/node";
-import Navbar from "../components/navbar";
 
 export async function loader() {
   return json({
@@ -75,7 +74,6 @@ export default function Index() {
 
   return (
     <div className="flex flex-col min-h-screen bg-white text-gray-800">
-      <Navbar />
 
       <main className="flex-grow">
         <section className="relative h-[60vh] w-full overflow-hidden">

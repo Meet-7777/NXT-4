@@ -1,5 +1,4 @@
 import { useLoaderData } from "@remix-run/react";
-import Navbar from "../components/navbar";
 import { json } from "@remix-run/node";
 
 export const loader = () => {
@@ -33,8 +32,6 @@ export default function Disclaimer() {
 
   return (
     <div className="flex flex-col min-h-screen bg-white">
-      <Navbar />
-
       <main className="flex-grow">
         <section className="px-4 py-10 max-w-4xl mx-auto">
           <div className="bg-gray-50 rounded-lg shadow p-6 md:p-8">

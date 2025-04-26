@@ -1,5 +1,4 @@
 import React from "react";
-import Navbar from "../components/navbar";
 
 export const meta = () => {
   return [
@@ -18,7 +17,6 @@ export default function ArchitectPartner() {
 
   return (
     <div className="flex flex-col min-h-screen bg-white">
-      <Navbar />
 
       <main className="flex-grow">
         <section className="px-4 py-10 max-w-3xl mx-auto">
