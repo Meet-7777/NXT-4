@@ -1,7 +1,13 @@
 // src/routes/products.jsx
 import { Link } from "@remix-run/react";
 import { useState } from "react";
-
+export const meta = () => [
+  { title: "NXT4 - Products" },
+  {
+    name: "products",
+    content: "Take a glance to our product gallery",
+  },
+];
 // Product data - you can replace these with your Cloudinary image URLs
 const productCategories = [
   {
