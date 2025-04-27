@@ -16,6 +16,7 @@
     "@remix-run/serve": "^2.16.5",
     "isbot": "^4.1.0",
     "lucide-react": "^0.487.0",
+    "mongodb": "^6.16.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "sanitize-html": "^2.16.0"

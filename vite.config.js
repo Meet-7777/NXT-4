@@ -17,7 +17,6 @@ export default defineConfig({
   ],
   build: {
     rollupOptions: {
-      external: ['mongodb'], // 👈 Add this part
     },
   },
 });
