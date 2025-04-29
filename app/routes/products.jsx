@@ -1,4 +1,3 @@
-// src/routes/products.jsx
 import { Link } from "@remix-run/react";
 import { useState } from "react";
 export const meta = () => [
@@ -8,7 +7,6 @@ export const meta = () => [
     content: "Take a glance to our product gallery",
   },
 ];
-// Product data - you can replace these with your Cloudinary image URLs
 const productCategories = [
   {
     id: "led-panels",
@@ -179,7 +177,6 @@ export default function Products() {
   );
 }
 
-// Error boundary specific to the products route
 export function ErrorBoundary() {
   return (
     <div className="flex flex-col justify-center items-center py-16 px-4 text-center">

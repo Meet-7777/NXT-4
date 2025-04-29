@@ -45,7 +45,7 @@ export const action = async ({ request }) => {
     });
     return json({ success: true });
   } catch (err) {
-    console.error("Feedback submission error:", err); // Backend logging
+    console.error("Feedback submission error:", err);
     return json(
       {
         errors: {

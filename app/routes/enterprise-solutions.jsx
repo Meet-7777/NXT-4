@@ -73,7 +73,7 @@ export async function action({ request }) {
     });
     return json({ success: true });
   } catch (err) {
-    console.error("Enterprise form error:", err); // Backend log
+    console.error("Enterprise form error:", err);
     return json(
       {
         errors: {
