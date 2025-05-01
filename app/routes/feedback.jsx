@@ -33,7 +33,10 @@ export const action = async ({ request }) => {
   }
 
   if (Object.keys(errors).length > 0) {
-    return json({ errors, values: { name, email, message }, success: false }, { status: 400 });
+    return json(
+      { errors, values: { name, email, message }, success: false },
+      { status: 400 }
+    );
   }
 
   try {
@@ -107,53 +110,71 @@ export default function Feedback() {
               onSubmit={() => setLoading(true)}
             >
               <div>
-                <label className="block text-sm font-medium text-gray-700">Full Name</label>
+                <label className="block text-sm font-medium text-gray-700">
+                  Full Name
+                </label>
                 <input
                   type="text"
                   name="name"
                   required
                   defaultValue={actionData?.values?.name || ""}
                   className={`mt-1 block w-full rounded-md border ${
-                    actionData?.errors?.name ? "border-red-500" : "border-gray-300"
+                    actionData?.errors?.name
+                      ? "border-red-500"
+                      : "border-gray-300"
                   } shadow-sm p-2`}
                   placeholder="Walter White"
                 />
                 {actionData?.errors?.name && (
-                  <p className="text-red-500 text-xs mt-1">{actionData.errors.name}</p>
+                  <p className="text-red-500 text-xs mt-1">
+                    {actionData.errors.name}
+                  </p>
                 )}
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700">Email Address</label>
+                <label className="block text-sm font-medium text-gray-700">
+                  Email Address
+                </label>
                 <input
                   type="email"
                   name="email"
                   required
                   defaultValue={actionData?.values?.email || ""}
                   className={`mt-1 block w-full rounded-md border ${
-                    actionData?.errors?.email ? "border-red-500" : "border-gray-300"
+                    actionData?.errors?.email
+                      ? "border-red-500"
+                      : "border-gray-300"
                   } shadow-sm p-2`}
                   placeholder="walt@gmail.com"
                 />
                 {actionData?.errors?.email && (
-                  <p className="text-red-500 text-xs mt-1">{actionData.errors.email}</p>
+                  <p className="text-red-500 text-xs mt-1">
+                    {actionData.errors.email}
+                  </p>
                 )}
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700">Message</label>
+                <label className="block text-sm font-medium text-gray-700">
+                  Message
+                </label>
                 <textarea
                   name="message"
                   rows={5}
                   required
                   defaultValue={actionData?.values?.message || ""}
                   className={`mt-1 block w-full rounded-md border ${
-                    actionData?.errors?.message ? "border-red-500" : "border-gray-300"
+                    actionData?.errors?.message
+                      ? "border-red-500"
+                      : "border-gray-300"
                   } shadow-sm p-2`}
                   placeholder="Write your message here..."
                 />
                 {actionData?.errors?.message && (
-                  <p className="text-red-500 text-xs mt-1">{actionData.errors.message}</p>
+                  <p className="text-red-500 text-xs mt-1">
+                    {actionData.errors.message}
+                  </p>
                 )}
               </div>
 
@@ -162,7 +183,9 @@ export default function Feedback() {
                   type="submit"
                   disabled={loading}
                   className={`px-6 py-2 rounded-md text-white font-semibold transition-colors ${
-                    loading ? "bg-gray-400 cursor-not-allowed" : "bg-[#0E46A3] hover:bg-[#03346E]"
+                    loading
+                      ? "bg-gray-400 cursor-not-allowed"
+                      : "bg-[#0E46A3] hover:bg-[#03346E]"
                   }`}
                 >
                   {loading ? "Submitting..." : "Submit"}
@@ -175,7 +198,9 @@ export default function Feedback() {
 
       <footer className="bg-gray-50 p-4 mt-auto border-t border-gray-200 text-center">
         <div className="max-w-4xl mx-auto">
-          <p className="mb-1 text-gray-600">© {year} NXT4. All rights reserved.</p>
+          <p className="mb-1 text-gray-600">
+            © {year} NXT4. All rights reserved.
+          </p>
           <p className="mb-2 text-gray-600">Proudly crafted in India ❤️</p>
         </div>
       </footer>

@@ -24,8 +24,7 @@ export async function loader() {
 export async function action({ request }) {
   const formData = await request.formData();
 
-  const sanitizeField = (field) =>
-    sanitize(formData.get(field) || "").trim();
+  const sanitizeField = (field) => sanitize(formData.get(field) || "").trim();
 
   const requiredFields = [
     "enterpriseName",
@@ -330,7 +329,9 @@ export default function EnterpriseForm() {
 
       <footer className="bg-gray-50 p-4 mt-auto border-t border-gray-200 text-center">
         <div className="max-w-4xl mx-auto">
-          <p className="mb-1 text-gray-600">© {year} NXT4. All rights reserved.</p>
+          <p className="mb-1 text-gray-600">
+            © {year} NXT4. All rights reserved.
+          </p>
           <p className="mb-2 text-gray-600">Proudly crafted in India ❤️</p>
         </div>
       </footer>

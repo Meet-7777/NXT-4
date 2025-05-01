@@ -74,7 +74,6 @@ export default function Index() {
 
   return (
     <div className="flex flex-col min-h-screen bg-white text-gray-800">
-
       <main className="flex-grow">
         <section className="relative h-[60vh] w-full overflow-hidden">
           <img

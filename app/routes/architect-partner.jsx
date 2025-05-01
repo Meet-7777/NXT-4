@@ -17,7 +17,6 @@ export default function ArchitectPartner() {
 
   return (
     <div className="flex flex-col min-h-screen bg-white">
-
       <main className="flex-grow">
         <section className="px-4 py-10 max-w-3xl mx-auto">
           <div className="bg-gray-50 p-8 rounded-lg shadow-lg text-center">
