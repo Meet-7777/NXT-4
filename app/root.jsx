@@ -54,7 +54,6 @@ function Document({ title, children }) {
         <Meta />
         <Links />
         <link rel="stylesheet" href="/build/tailwind.css" />{" "}
-        {/* Add this line explicitly */}
       </head>
       <body className="min-h-screen flex flex-col bg-white text-gray-900">
         {children}
@@ -84,7 +83,7 @@ export function ErrorBoundary() {
   let heading = "Something went wrong";
   let message = "We apologize for the inconvenience. Please try again later.";
 
-  // Provide more meaningful error messages based on status codes
+  
   if (isRouteErrorResponse(error)) {
     switch (error.status) {
       case 404:
@@ -114,7 +113,7 @@ export function ErrorBoundary() {
     heading = "Application Error";
     message =
       "Our application encountered an unexpected error. Please try again later.";
-    // Log the actual error for developers but don't show to users
+    
     console.error(error);
   }
 

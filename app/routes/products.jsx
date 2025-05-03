@@ -94,7 +94,6 @@ export default function Products() {
 
   return (
     <div className="container mx-auto px-4 py-12">
-      {/* Header Section */}
       <div className="mb-12 text-center">
         <h1 className="text-4xl font-bold text-[#03346E] mb-4">Our Products</h1>
         <p className="text-lg text-gray-600 max-w-2xl mx-auto">
@@ -102,7 +101,6 @@ export default function Products() {
           We provide only the best products for residential and commercial projects.
         </p>
         
-        {/* Search Filter */}
         <div className="mt-6 max-w-md mx-auto">
           <input 
             type="text"
@@ -114,7 +112,6 @@ export default function Products() {
         </div>
       </div>
 
-      {/* Products Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {filteredProducts.map((product) => (
           <div 
@@ -135,18 +132,11 @@ export default function Products() {
             <div className="p-6">
               <h3 className="text-xl font-bold text-[#03346E] mb-2">{product.title}</h3>
               <p className="text-gray-600 text-sm mb-4">{product.description}</p>
-              {/* <Link 
-                to={`/products/${product.id}`} 
-                className="inline-block bg-[#F5004F] hover:bg-[#d60648] text-white py-2 px-4 rounded-md text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-[#F5004F] focus:ring-offset-2"
-              >
-                View Details
-              </Link> */}
             </div>
           </div>
         ))}
       </div>
 
-      {/* Empty State */}
       {filteredProducts.length === 0 && (
         <div className="text-center py-16">
           <h2 className="text-2xl font-semibold text-[#03346E] mb-2">No products found</h2>
@@ -160,7 +150,6 @@ export default function Products() {
         </div>
       )}
 
-      {/* CTA Section */}
       <div className="mt-16 bg-gray-50 p-8 rounded-lg text-center">
         <h2 className="text-2xl font-bold text-[#03346E] mb-3">Need custom solutions?</h2>
         <p className="text-lg text-gray-600 mb-6">
