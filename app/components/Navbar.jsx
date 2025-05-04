@@ -11,6 +11,9 @@ export default function Navbar() {
   const location = useLocation();
 
   const priceListRef = useRef(null);
+  const partnershipsRef = useRef(null);
+  const mobileMenuRef = useRef(null);
+  const mobileMenuButtonRef = useRef(null);
 
   const priceListCategories = [
     {
@@ -91,52 +94,58 @@ export default function Navbar() {
     }
   }, [isPriceListOpen, isMobileView]);
 
+  // Reset all dropdown states when mobile menu is closed
+  useEffect(() => {
+    if (!isMenuOpen && isMobileView) {
+      setIsPriceListOpen(false);
+      setIsPartnershipsOpen(false);
+      setActiveCategory(null);
+    }
+  }, [isMenuOpen, isMobileView]);
+
   useEffect(() => {
     const handleClickOutside = (e) => {
-      // For desktop view only
+      // For desktop view
       if (!isMobileView) {
-        const priceListContainer = document.getElementById(
-          "price-list-container"
-        );
+        // Close price list menu if clicked outside
         if (
           isPriceListOpen &&
-          priceListContainer &&
-          !priceListContainer.contains(e.target)
+          priceListRef.current &&
+          !priceListRef.current.contains(e.target)
         ) {
           setIsPriceListOpen(false);
           setActiveCategory(null);
         }
 
-        const partnershipsContainer = document.getElementById(
-          "partnerships-container"
-        );
+        // Close partnerships menu if clicked outside
         if (
           isPartnershipsOpen &&
-          partnershipsContainer &&
-          !partnershipsContainer.contains(e.target)
+          partnershipsRef.current &&
+          !partnershipsRef.current.contains(e.target)
         ) {
           setIsPartnershipsOpen(false);
         }
-      }
-
-      // Always handle mobile menu outside clicks
-      const mobileMenuButton = document.getElementById("mobile-menu-button");
-      const mobileMenu = document.getElementById("mobile-menu");
-      if (
-        isMenuOpen &&
-        mobileMenu &&
-        !mobileMenu.contains(e.target) &&
-        mobileMenuButton &&
-        !mobileMenuButton.contains(e.target)
-      ) {
-        setIsMenuOpen(false);
+      } else {
+        // Mobile view - close menu when clicking outside
+        if (
+          isMenuOpen &&
+          mobileMenuRef.current &&
+          mobileMenuButtonRef.current &&
+          !mobileMenuRef.current.contains(e.target) &&
+          !mobileMenuButtonRef.current.contains(e.target)
+        ) {
+          setIsMenuOpen(false);
+          // Also close any open dropdowns when closing the mobile menu
+          setIsPriceListOpen(false);
+          setIsPartnershipsOpen(false);
+          setActiveCategory(null);
+        }
       }
     };
 
-    document.body.addEventListener("click", handleClickOutside);
-
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.body.removeEventListener("click", handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isPriceListOpen, isPartnershipsOpen, isMenuOpen, isMobileView]);
 
@@ -174,6 +183,12 @@ export default function Navbar() {
 
   const toggleMobileMenu = (e) => {
     e.stopPropagation();
+    // Reset dropdown states when toggling mobile menu
+    if (isMenuOpen) {
+      setIsPriceListOpen(false);
+      setIsPartnershipsOpen(false);
+      setActiveCategory(null);
+    }
     setIsMenuOpen(!isMenuOpen);
   };
 
@@ -182,6 +197,10 @@ export default function Navbar() {
     e.stopPropagation();
     setIsPriceListOpen(!isPriceListOpen);
     setIsPartnershipsOpen(false);
+    // Reset active category when closing price list dropdown
+    if (isPriceListOpen) {
+      setActiveCategory(null);
+    }
   };
 
   // For mobile view
@@ -193,8 +212,7 @@ export default function Navbar() {
   };
 
   const isActive = (path) => location.pathname === path;
-  const baseLinkStyle =
-    "transition-colors duration-200 block px-1 py-1 rounded";
+  const baseLinkStyle = "transition-colors duration-200 block px-1 py-1 rounded";
   const activeStyle = "text-[#0E46A3] font-semibold underline";
   const inactiveStyle = "text-[#03346E] hover:text-[#F5004F]";
 
@@ -209,7 +227,7 @@ export default function Navbar() {
         </div>
 
         <button
-          id="mobile-menu-button"
+          ref={mobileMenuButtonRef}
           className="md:hidden text-[#03346E]"
           aria-label="Toggle menu"
           onClick={toggleMobileMenu}
@@ -247,7 +265,6 @@ export default function Navbar() {
           </Link>
 
           <div
-            id="price-list-container"
             className="relative"
             ref={priceListRef}
           >
@@ -313,8 +330,8 @@ export default function Navbar() {
           </div>
 
           <div
-            id="partnerships-container"
             className="relative"
+            ref={partnershipsRef}
           >
             <button
               className="bg-[#F5004F] hover:bg-[#d60648] text-white py-2 px-4 rounded transition-colors flex items-center"
@@ -354,7 +371,7 @@ export default function Navbar() {
 
       {isMenuOpen && (
         <div
-          id="mobile-menu"
+          ref={mobileMenuRef}
           className="md:hidden bg-white shadow-md"
         >
           <nav className="px-4 pb-4 space-y-2">
